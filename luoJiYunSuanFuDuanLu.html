@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<input type="text" name="" id="inp1">
+	<button onclick="demo()">点击</button>
+	<p id="p"></p>
+	<script type="text/javascript">
+		function demo(){
+			var score = document.getElementById('inp1').value;
+			if (score>100||score<0) {
+				p.innerHTML = '输入错误哦';
+				return;
+			}
+			var flower = (score>=90&&5)||
+						 (score>=80&&3)||
+						 (score>=60&&1)||0;
+				p.innerHTML ='恭喜你获得'+flower+'朵小红花';
+		}
+	</script>
+</body>
+</html>
