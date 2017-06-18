@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>菱形</title>
+</head>
+<body>
+	
+    <input type="button" name="" id="lingxing" value="菱形">
+    <script type="text/javascript">
+        function lx(){
+            for(var s=0;s<=2;s++){
+                    for(var i=0;i<6;i++){  
+                        for(var a=5;a>i;a--){
+                              document.writeln('&nbsp');
+                            }
+                            for(var j=0;j<=(2*i-1)+1;j++){  
+                                document.writeln('*');  
+                            }  
+                        document.writeln("<br/>");
+                        }
+                   for(var i=0;i<=5;i++){  
+                        for(var k=0;k<=i;k++){  
+                            document.writeln("&nbsp");  
+                        }  
+                        for(var m=0;m<(9-3*i)+i;m++){  
+                            document.writeln("*");  
+                        }  
+                        document.writeln("<br/>");  
+                    }  
+                }
+            }
+            var bl_lx=document.getElementById('lx');
+            var bl_bt=document.getElementById('lingxing');
+            bl_bt.onclick=function(){
+                lx();
+            }
+	</script>
+  
+</body>
+</html>
