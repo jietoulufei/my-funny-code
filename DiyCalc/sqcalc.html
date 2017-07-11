@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>孙小胖的calculator</title>
+	<style type="text/css">
+		table{
+			width: 500px;
+			height: 600px;
+			margin: 20px auto;
+			background-image: url(images/500X600.png);
+			background-repeat: no-repeat;
+			opacity: 0.7; 
+			text-align: center;
+			border: 1px solid gray;
+			border-radius: 3px;
+		}
+		td{
+			width: 20%;
+			height: 20%;
+		}
+		button{
+			width: 80%;
+			height: 80%;
+			opacity: 0.5;
+			font-size: 30px;
+			border: 1px solid gray;
+			border-radius: 3px;
+		}
+		input{
+			width: 88%;
+			height: 88%;
+			opacity: 0.5;
+			text-align: right;
+			font-size: 60px;
+		}
+		#tips{
+			position: absolute;
+			top: 0px;
+			left: 10px;
+		}
+		p{
+			line-height: 5px;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td colspan="5"><input type="text" name="" id="inpText"></td>
+		</tr>
+		<tr>
+			<td><button>7</button></td>
+			<td><button>8</button></td>
+			<td><button>9</button></td>
+			<td><button>+</button></td>
+			<td><button>=</button></td>
+		</tr>
+		<tr>
+			<td><button>4</button></td>
+			<td><button>5</button></td>
+			<td><button>6</button></td>
+			<td><button>-</button></td>
+			<td><button>m2</button></td>
+		</tr>
+		<tr>
+			<td><button>1</button></td>
+			<td><button>2</button></td>
+			<td><button>3</button></td>
+			<td><button>*</button></td>
+			<td><button>%</button></td>
+		</tr>
+		<tr>
+			<td><button>B</button></td>
+			<td><button>0</button></td>
+			<td><button>C</button></td>
+			<td><button>/</button></td>
+			<td><button>.</button></td>
+		</tr>
+	</table>
+	<div id="tips">
+		<h5>Tips</h5>
+		<p>B = 退格</p>
+		<p>C = 清除</p>
+		<p>% = 余数</p>
+		<p>m2 = 平方</p>
+		<p>。 = 无用</p>
+	</div>
+	<script type="text/javascript">
+		var btn = document.getElementsByTagName('button');
+		var inpText = document.getElementById('inpText');
+		var showN = '';
+		var fengzhi = false;
+		var firstN = '';
+		var secondN = '';
+		var oper = '';//保存运算符
+		for (var i = 0; i < btn.length; i++) {
+			btn[i].onmouseover = function(){
+				this.style.opacity = '1';
+			}
+			btn[i].onmouseout = function(){
+				this.style.opacity = '';
+			}
+			btn[i].onmousedown = docalc;//计算函数引用
+			btn[i].onmouseup = function(){
+				this.style.background = '';
+			}
+		}
+		function docalc(){
+			this.style.background = '#FD050F';
+			showN = this.innerHTML;
+			switch(showN){
+				case '=':
+					secondN = inpText.value;
+					inpText.value = yunSuan(parseInt(firstN),parseInt(secondN),oper);
+					firstN = '';
+					oper = '';
+					break;
+				case '+':
+				case '-':
+				case '*':
+				case '/':
+				case '%':
+				case 'm2':
+					oper = showN;
+					fengzhi = true;
+					if (firstN.length>0) {   //顺序很关键 必须判断在firstN = inpText.value之前
+						secondN = inpText.value;
+						inpText.value = yunSuan(parseInt(firstN),parseInt(secondN),oper);
+					}
+					firstN = inpText.value;
+					break;
+				case 'B':
+					var str = inpText.value;
+					var num = str.substring(0,str.length-1);
+					inpText.value = num;
+					break;
+				case 'C':
+					inpText.value = '';
+					oper = '';
+					showN = '';
+					firstN = '';
+					break;
+				case '.':
+					break;
+				default:
+					if (fengzhi) {
+						inpText.value = showN;  //第二次输入 暂时只能输入一位数
+						fengzhi = false;   //然后跳转到下面else事件
+					}else{
+						inpText.value = parseInt(inpText.value + showN); //正常第一次输入
+					}
+					break;
+			}
+		}
+		function yunSuan(one,two,oper){
+			var result = '';
+			switch(oper){
+				case '+':
+					result = one + two;
+					break;
+				case '-':
+					result = one - two;
+					break;
+				case '*':
+					result = one * two;
+					break;
+				case '/':
+					result = one / two;
+					break;
+				case '%':
+					result = one % two;
+					break;
+				case 'm2':
+					result = one*one;
+				default:
+					result = two;//选one的话会NaN 表示只输入1个值的时候点击等号
+					break;
+			}
+			return result;
+		}
+		inpText.onmouseover = function(){
+			this.style.opacity = 0.8;
+		}
+		inpText.onmouseout = function(){
+			this.style.opacity = '';
+		}
+	</script>
+</body>
+</html>
